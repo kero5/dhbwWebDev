@@ -1,0 +1,257 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="hero-section">
+    <div class="hero-section-text">
+        <h1>1Flugsuche</h1>
+        <h5>Finde deinen Traumurlaub</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-12 columns">
+        <ul class="tabbed-search tabs" data-tabs id="tabbed-search">
+            <li class="tabs-title is-active"><a href="#panel1">Flüge</a></li>
+            <li class="tabs-title"><a href="#panel2">Hotels</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="tabbed-search-content tabs-content" data-tabs-content="tabbed-search">
+    <div class="tabs-panel is-active" id="panel1">
+        <form action="http://flights.eliashenrich.de/form.php" method="POST" onsubmit="return showOverlay()">
+            <div class="row">
+                <div class="small-12 medium-4 large-4 columns">
+                    <label>
+                        <input type="text" name="origin" value="SYD" placeholder="von">
+                    </label>
+                </div>
+                <div class="small-12 medium-4 large-4 columns">
+                    <label>
+                        <input type="text" name="destination" value="LAX" placeholder="nach">
+                    </label>
+                </div>
+                <div class="small-12 medium-4 large-4 columns">
+                    <button type="submit" value="Suchen" class="primary button expanded search-button"><i
+                            class="fa fa-search"></i>Suche Flüge
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tabs-panel" id="panel2">
+        <form>
+            <div class="row">
+                <div class="small-12 medium-2 large-3 columns">
+                    <label>
+                        <input type="text" placeholder="von">
+                    </label>
+                </div>
+                <div class="small-12 medium-2 large-3 columns">
+                    <label>
+                        <input type="text" placeholder="bis">
+                    </label>
+                </div>
+
+
+                <div class="small-12 medium-2 large-3 columns">
+                    <label>
+                        <select>
+                            <option value="one">1 Person</option>
+                            <option value="two">2 Personen</option>
+                            <option value="three">3 Personen</option>
+                            <option value="four">4 Personen</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="small-12 medium-2 large-3 columns">
+                    <button type="button" class="primary button expanded search-button"><i class="fa fa-search"></i>Suche
+                        Hotels
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="portfolio-resume-scrolling-container row">
+    <div class="columns small-12 medium-6 portfolio-resume-scrolling">
+        <ul class="flightList" id="flightList">
+            <li class="hidden" id="listDummy">
+                <span class="flightFrom"></span> -> <span class="flightTo"></span>
+                <span class="timeDeparture">13:00</span> <span class="timeArrival">17:00</span>
+            </li>
+        </ul>
+    </div>
+    <div class="columns small-12 medium-6 portfolio-resume-overview">
+        <h2 class="work-feature-block-header">Rechter Content</h2>
+    </div>
+</div>
+
+<footer class="marketing-site-footer">
+    <div class="row medium-unstack">
+        <div class="medium-4 columns">
+            <h1 class="marketing-site-footer-name">Flugsuche 1AG</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita dolorem accusantium architecto id
+                quidem, itaque nesciunt quam ducimus atque.</p>
+
+        </div>
+        <div class="medium-4 columns">
+            <h4 class="marketing-site-footer-title">Contact Info</h4>
+            <div class="marketing-site-footer-block">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <p> G3, 14 <br>Mannheim, 68159</p>
+            </div>
+            <div class="marketing-site-footer-block">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <p> 0170 / 12345678 </p>
+            </div>
+            <div class="marketing-site-footer-block">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <p>keke.rossberg@gmx.de</p>
+            </div>
+        </div>
+        <div class="medium-4 columns">
+            <h4 class="marketing-site-footer-title">Social Media</h4>
+            <div class="row small-up-3">
+                <div class="rounded-social-buttons">
+                    <a class="social-button facebook" href="#"></a>
+                    <a class="social-button twitter" href="#"></a>
+                    <a class="social-button linkedin" href="#"></a>
+                    <a class="social-button youtube" href="#"></a>
+                    <a class="social-button instagram" href="#"></a>
+                    <a class="social-button pinterest" href="#"></a>
+                    <a class="social-button google-plus" href="#"></a>
+                    <a class="social-button github" href="#"></a>
+                    <a class="social-button tumblr" href="#"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="marketing-site-footer-bottom">
+        <div class="row large-unstack align-middle">
+            <div class="column">
+                <p>&copy; 2018 No rights reserved</p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script>
+
+    function FlightSearchAPI() {
+        this.endpoint = 'http://flights.eliashenrich.de/api.php';
+
+        this.requestAPI = function (action, data, callback) {
+            var url = this.endpoint + '?action=' + action;
+
+            var keys = Object.keys(data);
+            for (var i = 0; i < keys.length; i++) {
+                var paramName = keys[i];
+                var paramValue = data[keys[i]];
+
+                url += "&" + paramName + "=" + paramValue;
+            }
+
+            var request = new XMLHttpRequest();
+
+            request.onreadystatechange = function () {
+                console.log("Status hat sich geändert", this.readyState);
+
+                // Ist die Anfrage beendet?
+                if (this.readyState === 4) {
+                    // Http-Statuscode prüfen
+                    if (this.status === 200) {
+                        console.log("Anfrage erfolgreich");
+                        console.log(this.responseText);
+
+                        callback(this.responseText);
+                    }
+                }
+            };
+
+            request.open('GET', url, true);
+            request.send();
+        };
+    }
+
+    var params = {
+        from: 25,
+        to: 23
+    };
+
+    var flightSearch = new FlightSearchAPI();
+    flightSearch.requestAPI('/route/find', params, successCallback);
+
+    function successCallback(data) {
+        var response = JSON.parse(data);
+
+        for (var i = 0; i < response.length; i++) {
+            var flug = response[i];
+
+            console.log("Flug " + i);
+
+            for (var j = 0; j < flug.length; j++) {
+                var leg = flug[j];
+
+                console.log("Leg " + j, leg);
+
+                var airportFrom = leg.airportFrom.CityName;
+                var airportTo = leg.airportTo.CityName;
+
+                addListItem(airportFrom, airportTo);
+            }
+
+        }
+    }
+
+    function showOverlay() {
+        addListItem("19:30");
+        return false;
+
+        var element = document.getElementById('waitOverlayWrapper');
+        element.style.display = "block";
+
+        return false;
+    }
+
+    function hideOverlay() {
+        var element = document.getElementById('waitOverlayWrapper');
+        element.style.display = 'none';
+    }
+
+    function addListItem(airportFrom, airportTo) {
+        var listItem = document.getElementById('listDummy');
+
+        // Listenelement klonen und neu einfügen
+        var newListItem = listItem.cloneNode(true);
+        newListItem.setAttribute('id', '');
+        newListItem.classList.remove('hidden');
+
+        // Kindelement des neuen Knotens bearbeiten
+        newListItem.getElementsByClassName('flightFrom')[0].innerText = airportFrom;
+        newListItem.getElementsByClassName('flightTo')[0].innerText = airportTo;
+
+        // airportFrom & airportTo setzen
+
+        document.getElementById('flightList').appendChild(newListItem);
+    }
+</script>
+
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
